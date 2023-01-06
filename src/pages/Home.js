@@ -1,13 +1,22 @@
 import { useState } from "react";
 import _ from "lodash";
-import ToDoListItem from "../components/ToDoListItem";
+import ToDoList from "../components/ToDoList";
+import Alert from "../components/Alert";
 
 const HomePage = () => {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
+  const [alertShown, setAlertShown] = useState(false);
 
   const handleCreate = (event) => {
     event.preventDefault();
+    if (_.isEmpty(todo)){
+      setAlertShown(true)
+      setTimeout(() => {
+        setAlertShown(false)
+      }, 3000)
+      return
+    }
     const todoInput = {
       id: Date.now(),
       checked: false,
@@ -37,7 +46,13 @@ const HomePage = () => {
     <>
       <div className="flex justify-center items-center w-full mx-auto mt-48">
         <div className="w-6/12">
-            <h1 className="text-center text-6xl font-medium tracking-wide mb-4">todo</h1>
+            <h1 className="text-center text-8xl font-medium tracking-widest mb-8">todo</h1>
+            {
+              alertShown && <Alert variant="danger">
+                <span className="font-medium">Oops! 🚫</span>
+                Please fill out todo name
+                </Alert>
+            }
           <form onSubmit={handleCreate}>
             <div className="relative">
               <input
@@ -47,7 +62,6 @@ const HomePage = () => {
                 placeholder="Create ToDo"
                 value={todo}
                 onChange={(event) => setTodo(event.target.value)}
-                required
                 autoComplete="off"
               />
               <button
@@ -60,14 +74,13 @@ const HomePage = () => {
           </form>
 
           <div className="mt-12 gap-1">
-            {todos.map((todoItem) => (
-              <ToDoListItem
-                key={todoItem.id}
-                todo={todoItem}
-                handleCheck={handleCheck}
-                handleDelete={handleDelete}
-              />
-            ))}
+            {
+              todos.length > 0 ? 
+              <ToDoList todos={todos}
+              handleCheck={handleCheck}
+              handleDelete={handleDelete} /> : 
+              <Alert>Let's do some fun 🤟</Alert> 
+            }
           </div>
         </div>
       </div>
