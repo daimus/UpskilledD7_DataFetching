@@ -1,6 +1,6 @@
-import {Link, useLocation} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import Sidebar from "./Sidebar";
-import {useEffect, useLayoutEffect, useState} from "react";
+import {useEffect, useState} from "react";
 
 const Navbar = () => {
     const [isSidebarShown, setSidebarShown] = useState(false)

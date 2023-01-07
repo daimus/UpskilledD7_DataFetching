@@ -1,24 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import HomePage from './pages/Home';
 import './assets/styles/index.css'
 import Navbar from "./components/Navbar";
 import AboutPage from "./pages/About";
 import NotFoundPage from "./pages/NotFound";
+import RegisterPage from "./pages/Register";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <Router>
             <Navbar/>
-            <div className="flex justify-center items-center w-full mx-auto mt-48">
+            <div className="flex justify-center items-center w-full mx-auto my-auto">
                 <div className="w-6/12">
                     <Routes>
                         <Route path='*' element={<NotFoundPage/>}/>
                         <Route path='/' element={<HomePage/>}/>
                         <Route path='/about' element={<AboutPage/>}/>
+                        <Route path='/register' element={<RegisterPage/>}/>
                     </Routes>
                 </div>
             </div>
