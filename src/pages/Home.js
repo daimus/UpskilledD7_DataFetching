@@ -2,10 +2,13 @@ import {useState} from "react";
 import _ from "lodash";
 import ToDoList from "../components/ToDoList";
 import Alert from "../components/Alert";
+import {useDispatch, useSelector} from "react-redux";
+import { addTodo, removeTodo, toggleCheckTodo } from "../store/todo";
 
 const HomePage = () => {
     const [todo, setTodo] = useState("");
-    const [todos, setTodos] = useState([]);
+    const dispatch = useDispatch();
+    const todos = useSelector((state) => state.todo.list);
     const [alertShown, setAlertShown] = useState(false);
 
     const handleCreate = (event) => {
@@ -17,39 +20,31 @@ const HomePage = () => {
             }, 3000)
             return
         }
-        const todoInput = {
-            id: Date.now(),
-            checked: false,
-            todo: todo,
-        };
-        setTodos([todoInput, ...todos]);
+        dispatch(addTodo(todo))
         setTodo("");
     };
 
     const handleCheck = (id, checked) => {
-        const index = _.findIndex(todos, function (o) {
-            return id === o.id;
-        });
-        const todosTemp = todos;
-        todosTemp[index].checked = checked;
-        setTodos(_.sortBy([...todosTemp], ['checked', 'id']));
+        dispatch(toggleCheckTodo({
+            id: id,
+            checked: checked
+        }))
     };
 
     const handleDelete = (id) => {
-        let todosTemp = todos;
-        todosTemp = _.filter(todosTemp, function (o) {
-            return id !== o.id;
-        });
-        setTodos([...todosTemp]);
+        dispatch(removeTodo({
+            id: id
+        }))
     };
+
     return (
         <>
             <div>
                 <h1 className="text-center text-8xl font-medium tracking-widest mb-8">todo</h1>
                 {
                     alertShown && <Alert variant="danger">
-                        <span className="font-medium">Oops! 🚫</span>
-                        Please fill out todo name
+                        <span className="font-medium">Oops! 🚫 </span>
+                        Please fill out activity
                     </Alert>
                 }
                 <form onSubmit={handleCreate}>

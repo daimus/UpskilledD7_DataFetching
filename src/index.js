@@ -8,10 +8,13 @@ import Navbar from "./components/Navbar";
 import AboutPage from "./pages/About";
 import NotFoundPage from "./pages/NotFound";
 import RegisterPage from "./pages/Register";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
+        <Provider store={store}>
         <Router>
             <Navbar/>
             <div className="flex justify-center items-center w-full mx-auto my-auto">
@@ -25,6 +28,7 @@ root.render(
                 </div>
             </div>
         </Router>
+        </Provider>
     </React.StrictMode>
 );
 

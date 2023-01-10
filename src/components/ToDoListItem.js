@@ -15,7 +15,7 @@ const ToDoListItem = (props) => {
                     />
                   </div>
                 </div>
-                <p className={`${checked && 'line-through'}`} >{todo}</p>
+                <p className={`${checked && 'line-through italic text-slate-300'}`} >{todo}</p>
                 <div>
                   <button
                     type="button"
