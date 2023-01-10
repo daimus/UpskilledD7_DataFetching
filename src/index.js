@@ -8,26 +8,29 @@ import Navbar from "./components/Navbar";
 import AboutPage from "./pages/About";
 import NotFoundPage from "./pages/NotFound";
 import RegisterPage from "./pages/Register";
-import { Provider } from "react-redux";
-import { store } from "./store";
+import {Provider} from "react-redux";
+import {persistor, store} from './store';
+import {PersistGate} from 'redux-persist/integration/react';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <Provider store={store}>
-        <Router>
-            <Navbar/>
-            <div className="flex justify-center items-center w-full mx-auto my-auto">
-                <div className="w-6/12">
-                    <Routes>
-                        <Route path='*' element={<NotFoundPage/>}/>
-                        <Route path='/' element={<HomePage/>}/>
-                        <Route path='/about' element={<AboutPage/>}/>
-                        <Route path='/register' element={<RegisterPage/>}/>
-                    </Routes>
-                </div>
-            </div>
-        </Router>
+            <PersistGate loading={null} persistor={persistor}>
+                <Router>
+                    <Navbar/>
+                    <div className="flex justify-center items-center w-full mx-auto my-auto">
+                        <div className="w-6/12">
+                            <Routes>
+                                <Route path='*' element={<NotFoundPage/>}/>
+                                <Route path='/' element={<HomePage/>}/>
+                                <Route path='/about' element={<AboutPage/>}/>
+                                <Route path='/register' element={<RegisterPage/>}/>
+                            </Routes>
+                        </div>
+                    </div>
+                </Router>
+            </PersistGate>
         </Provider>
     </React.StrictMode>
 );
