@@ -11,12 +11,16 @@ import RegisterPage from "./pages/Register";
 import {Provider} from "react-redux";
 import {persistor, store} from './store';
 import {PersistGate} from 'redux-persist/integration/react';
+import { QueryClient, QueryClientProvider } from 'react-query'
+
+const queryClient = new QueryClient()
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
+                <QueryClientProvider client={queryClient}>
                 <Router>
                     <Navbar/>
                     <div className="flex justify-center items-center w-full mx-auto my-auto">
@@ -30,6 +34,7 @@ root.render(
                         </div>
                     </div>
                 </Router>
+                </QueryClientProvider>
             </PersistGate>
         </Provider>
     </React.StrictMode>
