@@ -1,5 +1,5 @@
 const ToDoListItem = (props) => {
-    const {id, todo, checked} = props.todo
+    const {id, title, checked} = props.todo
 
     return (
         <>
@@ -15,7 +15,7 @@ const ToDoListItem = (props) => {
                     />
                   </div>
                 </div>
-                <p className={`${checked && 'line-through italic text-slate-300'}`} >{todo}</p>
+                <p className={`${checked && 'line-through italic text-slate-300'}`} >{title}</p>
                 <div>
                   <button
                     type="button"

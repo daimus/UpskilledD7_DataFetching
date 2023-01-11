@@ -7,6 +7,7 @@ import todoReducer from "./todo";
 const persistConfig = {
     key: 'root',
     storage,
+
 }
 
 const rootReducer = combineReducers({

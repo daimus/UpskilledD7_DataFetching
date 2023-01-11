@@ -3,12 +3,16 @@ import _ from "lodash";
 import ToDoList from "../components/ToDoList";
 import Alert from "../components/Alert";
 import {useDispatch, useSelector} from "react-redux";
-import { addTodo, removeTodo, toggleCheckTodo } from "../store/todo";
+import {addTodo, initTodoAsync, removeTodo, toggleCheckTodo} from "../store/todo";
+import Spinner from "../components/Spinner";
 
 const HomePage = () => {
     const [todo, setTodo] = useState("");
     const dispatch = useDispatch();
-    const todos = useSelector((state) => state.todo.list);
+    const {list: todos, isUninitialized} = useSelector((state) => state.todo);
+    if (isUninitialized){
+        dispatch(initTodoAsync())
+    }
     const [alertShown, setAlertShown] = useState(false);
 
     const handleCreate = (event) => {
@@ -69,11 +73,11 @@ const HomePage = () => {
 
                 <div className="mt-12 gap-1">
                     {
-                        todos.length > 0 ?
+                        todos?.length > 0 ?
                             <ToDoList todos={todos}
                                       handleCheck={handleCheck}
                                       handleDelete={handleDelete}/> :
-                            <Alert>Let's do some fun 🤟</Alert>
+                            isUninitialized ? <Spinner /> : <Alert>Let's do some fun 🤟</Alert>
                     }
                 </div>
             </div>
